@@ -1,0 +1,24 @@
+<mat-toolbar color="primary">
+  <span class="fill-remaining-space">
+    <button mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger" (click)="menuTrigger.openMenu()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" [overlapTrigger]="false">
+      <span (click)="menuTrigger.closeMenu()">
+        <button mat-menu-item>
+          <mat-icon>home</mat-icon>
+          <span>Home</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>people_outline</mat-icon>
+          <span>Users list</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Logout</span>
+        </button>
+      </span>
+    </mat-menu>
+  </span>
+  <span class="fill-remaining-space">Undefined Application</span>
+</mat-toolbar>
