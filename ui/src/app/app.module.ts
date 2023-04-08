@@ -17,6 +17,8 @@ import { UsersComponent } from './users/users.component';
 import { MatTableModule } from '@angular/material/table';
 import { DialogComponent } from './shared/dialog/dialog.component'  
 import { MatDialogModule } from '@angular/material/dialog';
+import { UsersService } from './users/users.service';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -38,9 +40,13 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatListModule,
     MatMenuModule,
     MatTableModule,
-    MatDialogModule
+    MatDialogModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    HttpClientModule,
+    UsersService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
