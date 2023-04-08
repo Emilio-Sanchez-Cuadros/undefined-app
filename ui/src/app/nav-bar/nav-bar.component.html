@@ -5,14 +5,14 @@
     </button>
     <mat-menu #menu="matMenu" [overlapTrigger]="false">
       <span (click)="menuTrigger.closeMenu()">
-        <button mat-menu-item>
+        <button routerLink="/" mat-menu-item>
           <mat-icon>home</mat-icon>
           <span>Home</span>
         </button>
-        <button mat-menu-item>
+        <!-- <button mat-menu-item>
           <mat-icon>people_outline</mat-icon>
           <span>Users list</span>
-        </button>
+        </button> -->
         <button mat-menu-item>
           <mat-icon>exit_to_app</mat-icon>
           <span>Logout</span>

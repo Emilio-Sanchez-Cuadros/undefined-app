@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { User, UserProfile } from '../models/models'
+import { MatDialog } from '@angular/material/dialog';
+import { User } from '../models/models'
+import { DialogComponent } from '../shared/dialog/dialog.component';
 
 @Component({
   selector: 'app-users',
@@ -17,7 +19,9 @@ ELEMENT_DATA = [
   displayedColumns: string[] = ['id', 'profileImage', 'name', 'role'];
   dataSource: any;
 
-  constructor() { }
+  constructor(
+    public matDialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.dataSource = this.ELEMENT_DATA;
@@ -25,6 +29,13 @@ ELEMENT_DATA = [
 
   viewUser(user: User) {
     console.log('viewUser', user);
+    const dialogRef = this.matDialog.open(DialogComponent, {
+      data: user,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 }

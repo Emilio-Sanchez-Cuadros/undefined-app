@@ -14,7 +14,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule} from '@angular/material/menu';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { UsersComponent } from './users/users.component';
-import { MatTableModule } from '@angular/material/table'  
+import { MatTableModule } from '@angular/material/table';
+import { DialogComponent } from './shared/dialog/dialog.component'  
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { MatTableModule } from '@angular/material/table'
     NavBarComponent,
     LandingPageComponent,
     UsersComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,8 @@ import { MatTableModule } from '@angular/material/table'
     MatIconModule,
     MatListModule,
     MatMenuModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
