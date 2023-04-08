@@ -1,0 +1,25 @@
+.image-container {
+    height: 50%;
+    width: 100%;
+}
+
+.landing-image {
+    width: 100%;
+    height: 100%;  
+    content: url(../../assets/images/close-up-hands-with-different-photos.jpeg);
+    object-fit: cover;
+}
+
+.custom-height {
+    height: 60%;
+}
+
+.lower-container {
+    height: 50%;
+}
+
+.btn {
+    width: 50%;
+    border-radius: 20px;
+    background-color: #673ab7;
+}

@@ -12,11 +12,16 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule} from '@angular/material/menu';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { UsersComponent } from './users/users.component';
+import { MatTableModule } from '@angular/material/table'  
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavBarComponent
+    NavBarComponent,
+    LandingPageComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +33,8 @@ import { MatMenuModule} from '@angular/material/menu';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
