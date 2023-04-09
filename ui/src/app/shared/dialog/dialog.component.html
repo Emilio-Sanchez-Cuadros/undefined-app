@@ -1,1 +1,29 @@
-<p>dialog works!</p>
+<h2 *ngIf="data.action === 'add'">Create user</h2>
+<h2 *ngIf="data.action === 'edit'">Edit User</h2>
+<section class="sample-app-content">
+    <form [formGroup]="userForm">
+        <mat-form-field appearance="outline">
+            <mat-label>First name</mat-label>
+            <input matInput formControlName="firstName" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline">
+            <mat-label>Last name</mat-label>
+            <input matInput formControlName="lastName" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" required>
+        </mat-form-field>
+    </form>
+</section>
+<div style="display:flex; justify-content: space-between;">
+    <button class="button-danger" (click)="dialogRef.close()">Cancel</button>
+    <button class="action-button" type="submit" (click)="submit()" [disabled]="!userForm.valid">Submit</button>
+</div>
