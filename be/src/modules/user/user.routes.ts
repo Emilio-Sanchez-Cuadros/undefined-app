@@ -23,7 +23,7 @@ async function userRoutes(server: FastifyInstance) {
     }, loginHandler);
 
     server.get('/', {
-        preHandler: server.authenticate
+        // preHandler: server.authenticate
     }, getUsersHandler);
     
 }

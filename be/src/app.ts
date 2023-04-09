@@ -5,6 +5,14 @@ import { userProfileSchemas } from "./modules/user-profile/user-profile.schema";
 import userRoutes from "./modules/user/user.routes";
 import userProfileRoutes from "./modules/user-profile/user-profile.routes";
 import fjwt from "@fastify/jwt";
+const cors = require("fastify-cors")
+
+// Enable CORS
+// fastify.register(cors, {
+//   origin: "http://localhost:4200/",
+//   methods: ['GET', 'POST', 'PUT']
+// })
+
 
 // TODO. Check why this is not working properly
 declare module "fastify" {

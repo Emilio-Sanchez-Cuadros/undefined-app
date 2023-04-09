@@ -5,8 +5,10 @@ import { verifyPassword } from "../../utils/hash";
 import { fastify } from "../../app";
 
 export async function registerUserHandler(req: FastifyRequest<{ Body: CreateUserData}>, reply: FastifyReply) {
-
     const body = req.body;
+    console.log('registerUserHandler', body);
+    reply.header("Access-Control-Allow-Origin", "*");
+    reply.header("Access-Control-Allow-Methods", "POST");
 
     try {
         const user = await createUser(body);
@@ -50,6 +52,8 @@ export async function loginHandler(req: FastifyRequest<{ Body: LoginData}>, repl
 }
 
 export async function getUsersHandler(req: FastifyRequest, reply: FastifyReply) {
+    reply.header("Access-Control-Allow-Origin", "*");
+    reply.header("Access-Control-Allow-Methods", "GET");
     const users = await findUsers();
 
     return users;
