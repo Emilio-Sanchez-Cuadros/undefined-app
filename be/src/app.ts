@@ -1,25 +1,18 @@
 import Fastify, { FastifyReply, FastifyRequest } from "fastify";
-export const fastify = Fastify({ logger: true });
+export const fastify = Fastify();
 import { userSchemas } from "./modules/user/user.schema";
 import { userProfileSchemas } from "./modules/user-profile/user-profile.schema";
 import userRoutes from "./modules/user/user.routes";
 import userProfileRoutes from "./modules/user-profile/user-profile.routes";
 import fjwt from "@fastify/jwt";
-const cors = require("fastify-cors")
-
-// Enable CORS
-// fastify.register(cors, {
-//   origin: "http://localhost:4200/",
-//   methods: ['GET', 'POST', 'PUT']
-// })
-
+import cors from '@fastify/cors'
 
 // TODO. Check why this is not working properly
 declare module "fastify" {
     export interface FastifyInstance {
         authenticate: any;
     }
-}
+};
 
 declare module "@fastify/jwt" {
     export interface FastifyJWT {
@@ -55,6 +48,10 @@ const start = async () => {
 
     fastify.register(userRoutes, { prefix: 'api/users'});
     fastify.register(userProfileRoutes, { prefix: 'api/users/user-profile'});
+    fastify.register(cors, { 
+        origin:'*',
+        methods:['POST', 'GET'],      
+    })
 
     try {
       await fastify.listen({ port: 3000, host: '0.0.0.0'  })
