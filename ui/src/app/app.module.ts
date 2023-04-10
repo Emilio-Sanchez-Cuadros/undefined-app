@@ -17,8 +17,12 @@ import { UsersComponent } from './users/users.component';
 import { MatTableModule } from '@angular/material/table';
 import { DialogComponent } from './shared/dialog/dialog.component'  
 import { MatDialogModule } from '@angular/material/dialog';
-import { UsersService } from './users/users.service';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { UsersService } from './services/users.service';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -41,8 +45,15 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
     MatMenuModule,
     MatTableModule,
     MatDialogModule,
-    HttpClientModule
-  ],
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ToastrModule.forRoot({
+      positionClass :'toast-bottom-right'
+    })
+],
   providers: [
     HttpClientModule,
     UsersService

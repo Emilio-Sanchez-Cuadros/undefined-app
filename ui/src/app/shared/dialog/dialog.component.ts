@@ -32,7 +32,6 @@ export class DialogComponent {
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private _usersService: UsersService
   ) {}
 
   ngOnInit(): void {
@@ -45,8 +44,14 @@ export class DialogComponent {
 
   async submit() {
     console.log('submitForm', this.userForm.value);
-    await lastValueFrom(this._usersService.createUser(this.userForm.value));
-    this.dialogRef.close({user: this.userForm.value})
-    // this.userValues.emit(this.userForm.value);
+    let user = this.transformData(this.userForm.value);
+    this.dialogRef.close({user: user});
+  }
+
+  transformData(user: any) {
+    user.name = user.firstName + ' ' + user.lastName;
+    delete user.firstName
+    delete user.lastName
+    return user;
   }
 }

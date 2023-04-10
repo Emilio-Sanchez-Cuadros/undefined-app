@@ -4,6 +4,7 @@ import { lastValueFrom } from 'rxjs';
 import { User } from '../models/models'
 import { DialogComponent } from '../shared/dialog/dialog.component';
 import { UsersService } from '../services/users.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-users',
@@ -17,15 +18,16 @@ export class UsersComponent implements OnInit {
 
   constructor(
     public matDialog: MatDialog,
-    private usersService: UsersService
+    private _usersService: UsersService,
+    private toaster: ToastrService
   ) { }
 
   ngOnInit(): void {
-    lastValueFrom(this.usersService.getUsers()).then(users => {
+    lastValueFrom(this._usersService.getUsers()).then(users => {
       this.dataSource = users;
     });
 
-    this.usersService.getUsers().subscribe(users => {
+    this._usersService.getUsers().subscribe(users => {
       console.log('The usersService observable', users);
       this.dataSource = users;
     })
@@ -40,23 +42,26 @@ export class UsersComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
+    dialogRef.afterClosed().subscribe(async result => {
       if (result?.user) {
-        let user = this.transformData(result.user);
-        this.dataSource.push(user);
-        console.log('The users after dialog was closed', this.dataSource);  
+        try {
+          console.log('The dialog was closed: ', result.user);
+          this.dataSource.push(result.user);
+          await lastValueFrom(this._usersService.createUser(result.user));
+          this.toaster.success('User created succesfully');
+        } catch (error: any) {
+          console.log(error);
+          switch (error.error.code) {
+            case 'P2002':
+              this.toaster.error('email already exists');
+              break;
+            default:
+              this.toaster.error('Something went wrong');
+              break;
+          }
+        }
       }
     });
-  }
-
-  transformData(user: any) {
-    user.name = user.firstName + ' ' + user.lastName;
-    user.id = this.dataSource.length + 1;
-    delete user.firstName
-    delete user.lastName
-    delete user.password
-    return user;
   }
 
 }

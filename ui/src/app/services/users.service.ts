@@ -1,15 +1,15 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { User } from '../models/models'
+import { User } from '../models/models';
+
+const httpOptions = {
+    headers: new HttpHeaders({ "Content-Type": "application/json" }),
+}; 
 
 @Injectable({ providedIn: "root" })
 export class UsersService {
-    private apiUrl = 'http://localhost:3000/api/';
-
-    private httpOptions = {
-        headers: new HttpHeaders({ "Content-Type": "application/json",  }),
-    };    
+    private apiUrl = 'http://localhost:3000/api/';   
 
     constructor(
         private http: HttpClient,
@@ -26,11 +26,12 @@ export class UsersService {
     }
 
 
-    createUser(user: User): Observable<User> {
+    createUser(user: User): Observable<any> {
         console.log('createUser() users service', user);
         return this.http.post(
             this.apiUrl + "users",
-            user
+            user,
+            httpOptions
         );
     }
 
