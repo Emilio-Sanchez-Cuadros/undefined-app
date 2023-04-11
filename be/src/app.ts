@@ -50,7 +50,7 @@ const start = async () => {
     fastify.register(userProfileRoutes, { prefix: 'api/users/user-profile'});
     fastify.register(cors, { 
         origin:'*',
-        methods:['POST', 'GET'],      
+        methods:['POST', 'GET', 'PUT', 'DELETE'],      
     })
 
     try {
