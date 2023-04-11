@@ -25,5 +25,5 @@
 </section>
 <div style="display:flex; justify-content: space-between;">
     <button class="button-danger" (click)="dialogRef.close()">Cancel</button>
-    <button class="action-button" type="submit" (click)="submit()" [disabled]="!userForm.valid">Submit</button>
+    <button class="action-button" type="submit" (click)="submit()" [disabled]="!userForm.valid">{{ submitText }}</button>
 </div>

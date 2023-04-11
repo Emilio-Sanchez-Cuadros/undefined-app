@@ -17,6 +17,7 @@ export class DialogComponent {
 
   firstName: string = this.data?.user?.name?.split(' ').slice(0, -1).join(' ');
   lastName: string = this.data?.user?.name?.split(' ').slice(-1).join(' ');
+  submitText: string = '';
 
   userForm = new FormGroup({
     firstName: new FormControl(this.firstName || '', Validators.required),
@@ -36,6 +37,7 @@ export class DialogComponent {
 
   ngOnInit(): void {
     console.log('this.data', this.data);
+    this.data.action === 'add' ? this.submitText = 'Create' : this.submitText = 'Update';
   }
 
   onNoClick(): void {
@@ -45,11 +47,12 @@ export class DialogComponent {
   async submit() {
     console.log('submitForm', this.userForm.value);
     let user = this.transformData(this.userForm.value);
-    this.dialogRef.close({user: user});
+    this.dialogRef.close({user: user, action: this.data.action });
   }
 
   transformData(user: any) {
     user.name = user.firstName + ' ' + user.lastName;
+    user.id = this.data.user.id;
     delete user.firstName
     delete user.lastName
     return user;

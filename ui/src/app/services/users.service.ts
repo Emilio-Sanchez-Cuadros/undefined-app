@@ -35,10 +35,13 @@ export class UsersService {
         );
     }
 
-    // updateUser(id: any, update: User): Observable<User> {
-    //     return this.http.put(this.authUrl + "users/" + id, update, httpOptions);
-    // }
-
-    // Update user data
+    updateUser(user: User, userId: number): Observable<any> {
+        console.log('updateUser() users service', user);
+        return this.http.put(
+            this.apiUrl + "users/" + userId,
+            user,
+            httpOptions
+        );
+    }
   
 }

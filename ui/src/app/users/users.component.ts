@@ -15,6 +15,7 @@ export class UsersComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'name', 'email'];
   dataSource: any;
+  toasterMessage: string = '';
 
   constructor(
     public matDialog: MatDialog,
@@ -34,7 +35,7 @@ export class UsersComponent implements OnInit {
   }
 
   viewUser(user: User | null, action: string) {
-    console.log('viewUser', user);
+    console.log('viewUser()', user);
     const dialogRef = this.matDialog.open(DialogComponent, {
       data: {
         user,
@@ -47,8 +48,19 @@ export class UsersComponent implements OnInit {
         try {
           console.log('The dialog was closed: ', result.user);
           this.dataSource.push(result.user);
-          await lastValueFrom(this._usersService.createUser(result.user));
-          this.toaster.success('User created succesfully');
+          if (result.action === 'add') {
+            await lastValueFrom(this._usersService.createUser(result.user));
+            this.toasterMessage = 'User created succesfully';
+            this.toaster.success('User created succesfully');
+          } else {
+            await lastValueFrom(this._usersService.updateUser(result.user, result.user.id));
+            this.toasterMessage = 'User updated succesfully';
+          }
+          this.toaster.success(this.toasterMessage);
+          await lastValueFrom(this._usersService.updateUser(result.user, result.user.id));
+          lastValueFrom(this._usersService.getUsers()).then(users => {
+            this.dataSource = users;
+          });
         } catch (error: any) {
           console.log(error);
           switch (error.error.code) {
@@ -56,7 +68,7 @@ export class UsersComponent implements OnInit {
               this.toaster.error('email already exists');
               break;
             default:
-              this.toaster.error('Something went wrong');
+              this.toaster.error('Something went wrong, please review the data and try again');
               break;
           }
         }
