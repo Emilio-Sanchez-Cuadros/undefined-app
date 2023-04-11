@@ -18,13 +18,19 @@ export class DialogComponent {
   firstName: string = this.data?.user?.name?.split(' ').slice(0, -1).join(' ');
   lastName: string = this.data?.user?.name?.split(' ').slice(-1).join(' ');
   submitText: string = '';
+  userForm: any;
 
-  userForm = new FormGroup({
-    firstName: new FormControl(this.firstName || '', Validators.required),
-    lastName: new FormControl(this.lastName || '', Validators.required),
-    email: new FormControl(this.data?.user?.email || '', Validators.required),
-    password: new FormControl(this.data?.user ? '****' : '', Validators.required),
-  });
+  // userForm = new FormGroup({
+  //   firstName: new FormControl(this.firstName || '', Validators.required),
+  //   lastName: new FormControl(this.lastName || '', Validators.required),
+  //   email: new FormControl(this.data?.user?.email || '', Validators.required),
+  //   password: new FormControl(this.data?.user ? '****' : '', Validators.required),
+  // });
+
+  // loginForm = new FormGroup({
+  //   email: new FormControl('', Validators.required),
+  //   password: new FormControl('', Validators.required),
+  // });
 
   @Output()
   userValues = new EventEmitter<User>();
@@ -39,15 +45,35 @@ export class DialogComponent {
     console.log('this.data', this.data);
     switch (this.data.action) {
       case 'edit':
-        this.submitText = 'Update'
+        this.submitText = 'Update';
+        this.userForm = new FormGroup({
+          firstName: new FormControl(this.firstName || '', Validators.required),
+          lastName: new FormControl(this.lastName || '', Validators.required),
+          email: new FormControl(this.data?.user?.email || '', Validators.required),
+          password: new FormControl(this.data?.user ? '****' : '', Validators.required),
+        });
         break;
       case 'delete':
         this.submitText = 'Confirm'
         break;
+      case 'login':
+        this.submitText = 'Login';
+        this.userForm = new FormGroup({
+          email: new FormControl(this.data?.user?.email || '', Validators.required),
+          password: new FormControl(this.data?.user ? '****' : '', Validators.required),
+        });
+        break;
       default:
-        this.submitText = 'Create'
+        this.submitText = 'Create';
+        this.userForm = new FormGroup({
+          firstName: new FormControl(this.firstName || '', Validators.required),
+          lastName: new FormControl(this.lastName || '', Validators.required),
+          email: new FormControl(this.data?.user?.email || '', Validators.required),
+          password: new FormControl(this.data?.user ? '****' : '', Validators.required),
+        });
         break;
     }
+
   }
 
   onNoClick(): void {
@@ -57,13 +83,20 @@ export class DialogComponent {
   async submit() {
     console.log('submitForm', this.userForm.value);
     let user = this.transformData(this.userForm.value);
-    this.dialogRef.close({user: user, action: this.data.action });
+    if (!['delete', 'login'].includes(this.data.action)) {
+      this.dialogRef.close({user: user, action: this.data.action });
+    } else {
+      this.dialogRef.close({ user: user });
+    }
   }
 
   transformData(user: any) {
     user.name = user.firstName + ' ' + user.lastName;
     if (this.data.user) {
       user.id = this.data.user.id;
+    }
+    if (this.data.action === 'login') {
+      delete user.name;
     }
     delete user.firstName
     delete user.lastName

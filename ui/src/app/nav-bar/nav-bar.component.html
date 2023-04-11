@@ -9,12 +9,12 @@
           <mat-icon>home</mat-icon>
           <span>Home</span>
         </button>
-        <!-- <button mat-menu-item>
-          <mat-icon>people_outline</mat-icon>
-          <span>Users list</span>
-        </button> -->
-        <button mat-menu-item>
-          <mat-icon>exit_to_app</mat-icon>
+        <button *ngIf="!token" (click)="login('login')" mat-menu-item>
+          <mat-icon>login</mat-icon>
+          <span>Login</span>
+        </button>
+        <button *ngIf="token" (click)="logout()" mat-menu-item>
+          <mat-icon>logout</mat-icon>
           <span>Logout</span>
         </button>
       </span>

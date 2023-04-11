@@ -5,6 +5,9 @@ import { User } from '../models/models'
 import { DialogComponent } from '../shared/dialog/dialog.component';
 import { UsersService } from '../services/users.service';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-users',
@@ -13,13 +16,18 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class UsersComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'email', 'edit-button', 'delete-button'];
+  displayedColumns: string[] = ['id', 'name', 'email'];
   dataSource: any;
   toasterMessage: string = '';
+  token: any = undefined;
+
+  private token$ = new Subject<String>();
+  // tokenObservable$: Observable<String>();
 
   constructor(
     public matDialog: MatDialog,
     private _usersService: UsersService,
+    private _userService: UserService,
     private toaster: ToastrService
   ) { }
 
@@ -31,8 +39,21 @@ export class UsersComponent implements OnInit {
     this._usersService.getUsers().subscribe(users => {
       console.log('The usersService observable', users);
       this.dataSource = users;
-    })
+    });
+
+    this._userService.getToken().subscribe(token => {
+      console.log('navbar this._userService', token);
+      this.token = token;
+      if (token) {
+        this.displayedColumns.push('edit-button', 'delete-button');
+      }
+
+      if (!token && this.displayedColumns.includes('edit-button')) {
+        this.displayedColumns.filter(column => column !== 'edit-button' && column !== 'delete-button');
+      } 
+    });
   }
+
 
   viewUser(user: User | null, action: string) {
     console.log('viewUser()', user);
