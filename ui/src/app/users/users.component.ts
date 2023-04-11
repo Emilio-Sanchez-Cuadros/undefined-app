@@ -51,13 +51,11 @@ export class UsersComponent implements OnInit {
           if (result.action === 'add') {
             await lastValueFrom(this._usersService.createUser(result.user));
             this.toasterMessage = 'User created succesfully';
-            this.toaster.success('User created succesfully');
           } else {
             await lastValueFrom(this._usersService.updateUser(result.user, result.user.id));
             this.toasterMessage = 'User updated succesfully';
           }
           this.toaster.success(this.toasterMessage);
-          await lastValueFrom(this._usersService.updateUser(result.user, result.user.id));
           lastValueFrom(this._usersService.getUsers()).then(users => {
             this.dataSource = users;
           });

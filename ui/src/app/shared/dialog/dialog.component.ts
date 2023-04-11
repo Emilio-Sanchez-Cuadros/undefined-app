@@ -52,7 +52,9 @@ export class DialogComponent {
 
   transformData(user: any) {
     user.name = user.firstName + ' ' + user.lastName;
-    user.id = this.data.user.id;
+    if (this.data.user) {
+      user.id = this.data.user.id;
+    }
     delete user.firstName
     delete user.lastName
     return user;
