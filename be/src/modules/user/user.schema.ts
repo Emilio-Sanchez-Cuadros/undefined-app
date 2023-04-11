@@ -12,12 +12,23 @@ const userCore = {
 const createUserSchema = z.object({
     ...userCore,
     password: z.string({
-        required_error: 'Password is required',
+        invalid_type_error: 'Password has to be a string'
+    })
+});
+
+const updateUserSchema = z.object({
+    ...userCore,
+    password: z.string({
         invalid_type_error: 'Password has to be a string'
     })
 });
 
 const createUserResponseSchema = z.object({
+    id: z.number(),
+    ...userCore
+});
+
+const updateUserResponseSchema = z.object({
     id: z.number(),
     ...userCore
 });
@@ -35,11 +46,14 @@ const loginResponseSchema = z.object({
 });
 
 export type CreateUserData = z.infer<typeof createUserSchema>;
+export type UpdateUserData = z.infer<typeof updateUserSchema>;
 export type LoginData = z.infer<typeof loginSchema>;
 
 export const {schemas: userSchemas, $ref } = buildJsonSchemas({
     createUserSchema,
+    updateUserSchema,
     createUserResponseSchema,
+    updateUserResponseSchema,
     loginSchema,
     loginResponseSchema
 }, { $id: "userSchema" })
