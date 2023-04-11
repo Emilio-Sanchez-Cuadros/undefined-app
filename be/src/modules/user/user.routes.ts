@@ -1,9 +1,10 @@
 import { FastifyInstance } from "fastify";
-import { registerUserHandler, updateUserHandler, loginHandler, getUsersHandler } from './user.controller'
+import { registerUserHandler, updateUserHandler, deleteUserHandler, loginHandler, getUsersHandler } from './user.controller'
 import { $ref } from "./user.schema";
 
 async function userRoutes(server: FastifyInstance) {
 
+    // Create user
     server.post('/', {
         schema: {
             body: $ref("createUserSchema"),
@@ -13,6 +14,7 @@ async function userRoutes(server: FastifyInstance) {
         }
     }, registerUserHandler);
 
+    // Log in with already created user
     server.post('/login', {
         schema: {
             body: $ref("loginSchema"),
@@ -22,6 +24,7 @@ async function userRoutes(server: FastifyInstance) {
         }
     }, loginHandler);
 
+    // Update user
     server.put('/:id', {
         schema: {
             body: $ref("updateUserSchema"),
@@ -31,6 +34,11 @@ async function userRoutes(server: FastifyInstance) {
         }
     }, updateUserHandler);
 
+    // Delete user
+    server.delete('/:id', {
+    }, deleteUserHandler);
+
+    // Get users list
     server.get('/', {
         preHandler: server.authenticate
     }, getUsersHandler);

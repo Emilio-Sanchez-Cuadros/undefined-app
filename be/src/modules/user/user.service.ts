@@ -29,6 +29,12 @@ export async function updateUser(params: UpdateUserData, id: number) {
     })
 }
 
+export async function deleteUser(id: number) {
+    return prisma.user.delete({
+        where: { id: Number(id) },
+      });
+}
+
 export async function findUsers() {
     return prisma.user.findMany({
         select: {

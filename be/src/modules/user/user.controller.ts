@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { createUser, updateUser, findUserByEmail, findUsers } from "./user.service";
+import { createUser, updateUser, deleteUser, findUserByEmail, findUsers } from "./user.service";
 import { CreateUserData, UpdateUserData, LoginData } from './user.schema';
 import { verifyPassword } from "../../utils/hash";
 import { fastify } from "../../app";
@@ -28,6 +28,18 @@ export async function updateUserHandler(req: FastifyRequest<{ Body: UpdateUserDa
     }
 
 }
+
+export async function deleteUserHandler(req: FastifyRequest<{Params: { id: number }}>, reply: FastifyReply) {
+    const { id } = req.params;
+    try {
+        const user = await deleteUser(id);
+        return reply.code(201).send({'User deleted successfully': user.id})
+        
+    } catch (e) {
+        console.log(e);
+        return reply.code(500).send(e)
+    }
+};
 
 export async function loginHandler(req: FastifyRequest<{ Body: LoginData}>, reply: FastifyReply) {
     const body = req.body;
