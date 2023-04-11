@@ -37,7 +37,17 @@ export class DialogComponent {
 
   ngOnInit(): void {
     console.log('this.data', this.data);
-    this.data.action === 'add' ? this.submitText = 'Create' : this.submitText = 'Update';
+    switch (this.data.action) {
+      case 'edit':
+        this.submitText = 'Update'
+        break;
+      case 'delete':
+        this.submitText = 'Confirm'
+        break;
+      default:
+        this.submitText = 'Create'
+        break;
+    }
   }
 
   onNoClick(): void {

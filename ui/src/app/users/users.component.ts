@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class UsersComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'email'];
+  displayedColumns: string[] = ['id', 'name', 'email', 'edit-button', 'delete-button'];
   dataSource: any;
   toasterMessage: string = '';
 
@@ -51,10 +51,10 @@ export class UsersComponent implements OnInit {
           if (result.action === 'add') {
             await lastValueFrom(this._usersService.createUser(result.user));
             this.toasterMessage = 'User created succesfully';
-          } else {
+          } else if (result.action === 'edit') {
             await lastValueFrom(this._usersService.updateUser(result.user, result.user.id));
             this.toasterMessage = 'User updated succesfully';
-          }
+          } 
           this.toaster.success(this.toasterMessage);
           lastValueFrom(this._usersService.getUsers()).then(users => {
             this.dataSource = users;
@@ -72,6 +72,28 @@ export class UsersComponent implements OnInit {
         }
       }
     });
+  }
+
+  async deleteUser(userId: number, action: string) {
+    console.log('deleteUser()', userId);
+    const dialogRef = this.matDialog.open(DialogComponent, {
+      data: {
+        action
+      },
+    });
+    dialogRef.afterClosed().subscribe(async result => {
+      try {
+        await lastValueFrom(this._usersService.deleteUser(userId));
+        this.toasterMessage = 'User deleted succesfully';
+        this.toaster.success(this.toasterMessage);
+        lastValueFrom(this._usersService.getUsers()).then(users => {
+          this.dataSource = users;
+        });
+      } catch (error) {
+        console.log(error);
+        this.toaster.error('Something went wrong, please try again');
+      }
+    })
   }
 
 }

@@ -43,5 +43,12 @@ export class UsersService {
             httpOptions
         );
     }
+
+    deleteUser(userId: number): Observable<any> {
+        console.log('deleteUser() users service', userId);
+        return this.http.delete(
+            this.apiUrl + "users/" + userId
+        );
+    }
   
 }
