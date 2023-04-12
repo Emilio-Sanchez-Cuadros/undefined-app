@@ -44,7 +44,7 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let user; columns: displayedColumns;"></tr>
             </table>
-            <button mat-raised-button class="action-button mt-5" (click)="viewUser(null, 'add')">Add user</button>
+            <button *ngIf="token" mat-raised-button class="action-button mt-5" (click)="viewUser(null, 'add')">Add user</button>
         </div>
     </div>
 </div>
