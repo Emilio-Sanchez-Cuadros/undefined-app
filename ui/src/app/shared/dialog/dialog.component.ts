@@ -81,8 +81,8 @@ export class DialogComponent {
   }
 
   async submit() {
-    console.log('submitForm', this.userForm.value);
-    let user = this.transformData(this.userForm.value);
+    console.log('submitForm', this.userForm?.value);
+    let user = this.transformData(this.userForm?.value);
     if (!['delete', 'login'].includes(this.data.action)) {
       this.dialogRef.close({user: user, action: this.data.action });
     } else {
@@ -91,15 +91,17 @@ export class DialogComponent {
   }
 
   transformData(user: any) {
-    user.name = user.firstName + ' ' + user.lastName;
-    if (this.data.user) {
-      user.id = this.data.user.id;
+    if (user) {
+      user.name = user.firstName + ' ' + user.lastName;
+      if (this.data.user) {
+        user.id = this.data.user.id;
+      }
+      if (this.data.action === 'login') {
+        delete user.name;
+      }
+      delete user.firstName
+      delete user.lastName
     }
-    if (this.data.action === 'login') {
-      delete user.name;
-    }
-    delete user.firstName
-    delete user.lastName
     return user;
   }
 }

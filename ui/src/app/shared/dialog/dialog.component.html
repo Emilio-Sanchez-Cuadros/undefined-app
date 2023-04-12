@@ -40,6 +40,6 @@
 </section>
 <div style="display:flex; justify-content: space-between;">
     <button mat-raised-button class="button" color="warn" (click)="dialogRef.close()">Cancel</button>
-    <button *ngIf="data.action !== 'login'"mat-raised-button class="action-button" type="submit" (click)="submit()" [disabled]="!userForm.valid && data.action !== 'delete'">{{ submitText }}</button>
+    <button *ngIf="data.action !== 'login'"mat-raised-button class="action-button" type="submit" (click)="submit()" [disabled]="!userForm?.valid && data.action !== 'delete'">{{ submitText }}</button>
     <button *ngIf="data.action === 'login'" mat-raised-button class="action-button" type="submit" (click)="submit()">{{ submitText }}</button>
 </div>

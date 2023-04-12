@@ -40,7 +40,7 @@ export class UsersComponent implements OnInit {
       console.log('The usersService observable', users);
       this.dataSource = users;
     });
-
+    
     this._userService.getToken().subscribe(token => {
       console.log('users.component this._userService', token);
       this.token = token;
