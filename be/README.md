@@ -25,14 +25,25 @@ To attach into terminal and see logs: docker attach postgres
 
 *Please note that when attached to container, use CTRL-c to stop the service.
 
-## dependencies
-npm add @prisma/client fastify fastify-zod zod zod-to-json-schema fastify-jwt fastify-swagger
+### Run into de docker container:
+(Skip this step until fix is implemented) 
+TODO: Fix issue with connection failing when creating app-be container 
+docker exec -it app-be /bin/sh
 
-## devDependencies
-npm add ts-node-dev typescript @types/node --dev
-
+## Create Prisma client
+npx prisma generate
 ## Initialise prisma
 npx prisma init --datasource-provider postgresql
 
 ### Migrate the schema
 npx prisma migrate dev --name init
+
+### Add admin user
+Use postman endpoint for the admin user to be able to login to the app. Then you can add, edit or delete users.
+
+
+## dependencies
+npm add @prisma/client fastify fastify-zod zod zod-to-json-schema fastify-jwt fastify-swagger
+
+## devDependencies
+npm add ts-node-dev typescript @types/node --dev
