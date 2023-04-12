@@ -25,16 +25,16 @@ To attach into terminal and see logs: docker attach postgres
 
 *Please note that when attached to container, use CTRL-c to stop the service.
 
-### Run into de docker container:
+### Run into the docker container:
 (Skip this step until fix is implemented) 
 TODO: Fix issue with connection failing when creating app-be container 
 docker exec -it app-be /bin/sh
 
-## Create Prisma client
-npx prisma generate
 ## Initialise prisma
 npx prisma init --datasource-provider postgresql
 
+## Create Prisma client
+npx prisma generate
 ### Migrate the schema
 npx prisma migrate dev --name init
 
