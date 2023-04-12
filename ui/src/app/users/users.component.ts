@@ -42,7 +42,7 @@ export class UsersComponent implements OnInit {
     });
 
     this._userService.getToken().subscribe(token => {
-      console.log('navbar this._userService', token);
+      console.log('users.component this._userService', token);
       this.token = token;
       if (token) {
         this.displayedColumns.push('edit-button', 'delete-button');
@@ -128,7 +128,8 @@ export class UsersComponent implements OnInit {
       console.log('login data', result);
       if (result) {
         try {
-          this.token = await lastValueFrom(this._userService.login(result.user));
+          const res = await lastValueFrom(this._userService.login(result.user));
+          this.token = res.token;
           localStorage.setItem("token", this.token);
           this._userService.setToken(this.token)
         } catch (error) {

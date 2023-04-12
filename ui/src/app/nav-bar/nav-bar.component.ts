@@ -6,6 +6,7 @@ import { UserService } from '../services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { lastValueFrom } from 'rxjs';
 import { DialogComponent } from '../shared/dialog/dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -18,7 +19,8 @@ export class NavBarComponent {
 
   constructor(
     private _userService: UserService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private router: Router
     ) {}
 
   ngOnInit() {
@@ -40,8 +42,8 @@ export class NavBarComponent {
       console.log('login data', result);
       if (result) {
         try {
-          this.token = await lastValueFrom(this._userService.login(result.user));
-          localStorage.setItem("token", this.token);
+          const res = await lastValueFrom(this._userService.login(result.user));
+          this.token = res.token;
           this._userService.setToken(this.token)
         } catch (error) {
           console.log(error);
@@ -56,6 +58,7 @@ export class NavBarComponent {
     const token = localStorage.getItem("token");
     if (token) {
       this._userService.removeToken();
-    }
+    };
+    this.router.navigateByUrl('/')
   }
 }
