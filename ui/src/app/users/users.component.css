@@ -50,3 +50,8 @@ button {
     overflow-wrap: break-word;
     word-wrap: break-word;  
 }
+
+.link {
+    color: #673ab7;
+    cursor: pointer;
+}

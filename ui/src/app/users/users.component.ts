@@ -117,4 +117,26 @@ export class UsersComponent implements OnInit {
     })
   }
 
+  async login(action: string) {
+    console.log('login()', action);
+    const dialogRef = this.matDialog.open(DialogComponent, {
+      data: {
+        action
+      },
+    });
+    dialogRef.afterClosed().subscribe(async result => {
+      console.log('login data', result);
+      if (result) {
+        try {
+          this.token = await lastValueFrom(this._userService.login(result.user));
+          localStorage.setItem("token", this.token);
+          this._userService.setToken(this.token)
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      
+    })
+  }
+
 }
